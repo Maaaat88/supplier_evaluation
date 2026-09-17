@@ -7,6 +7,7 @@ import { LoginPage } from './pages/LoginPage.js';
 import { NotFoundPage } from './pages/NotFoundPage.js';
 import { SupplierDetailPage } from './pages/SupplierDetailPage.js';
 import { SuppliersPage } from './pages/SuppliersPage.js';
+import { ValidationsPage } from './pages/ValidationsPage.js';
 
 export function App() {
   return (
@@ -21,7 +22,7 @@ export function App() {
           <Route path="suppliers/:id/evaluate" element={<EvaluationFormPage />} />
 
           <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
-            <Route path="validations" element={<ComingSoon title="Validation des évaluations" />} />
+            <Route path="validations" element={<ValidationsPage />} />
           </Route>
         </Route>
       </Route>

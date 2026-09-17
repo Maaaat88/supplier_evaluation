@@ -1,4 +1,9 @@
-import type { CriterionDto, EvaluationDetailDto, EvaluationInput } from 'shared';
+import type {
+  CriterionDto,
+  EvaluationDetailDto,
+  EvaluationInput,
+  PendingEvaluationDto,
+} from 'shared';
 import { apiFetch } from '../lib/api.js';
 
 export function fetchCriteria(signal?: AbortSignal) {
@@ -27,4 +32,19 @@ export function updateEvaluation(id: string, input: EvaluationInput) {
 
 export function submitEvaluation(id: string) {
   return apiFetch<EvaluationDetailDto>(`/evaluations/${id}/submit`, { method: 'POST' });
+}
+
+export function fetchPendingEvaluations(signal?: AbortSignal) {
+  return apiFetch<PendingEvaluationDto[]>('/evaluations/pending', { signal });
+}
+
+export function validateEvaluation(id: string) {
+  return apiFetch<EvaluationDetailDto>(`/evaluations/${id}/validate`, { method: 'POST' });
+}
+
+export function rejectEvaluation(id: string, rejectionReason: string) {
+  return apiFetch<EvaluationDetailDto>(`/evaluations/${id}/reject`, {
+    method: 'POST',
+    body: JSON.stringify({ rejectionReason }),
+  });
 }

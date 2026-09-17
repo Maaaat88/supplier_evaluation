@@ -15,7 +15,7 @@ export function ScorePreview({
         <p className="text-sm font-medium text-blue-900">Score global (aperçu en temps réel)</p>
         <p className="text-xs text-blue-700">
           {scoredCount} / {totalCount} critère{totalCount > 1 ? 's' : ''} noté
-          {scoredCount > 1 ? 's' : ''}
+          {totalCount > 1 ? 's' : ''}
         </p>
       </div>
       <ScoreBadge score={score} />

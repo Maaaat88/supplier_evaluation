@@ -1,0 +1,18 @@
+node_modules
+dist
+build
+
+.env
+.env.*.local
+
+# generated Prisma client output (regenerated via `npm run db:generate`)
+server/src/generated
+
+*.log
+npm-debug.log*
+
+.DS_Store
+
+.vscode/*
+!.vscode/extensions.json
+.idea

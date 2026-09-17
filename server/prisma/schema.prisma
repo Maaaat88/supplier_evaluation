@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  EVALUATOR
+  ADMIN
+}
+
+enum SupplierCategory {
+  RAW_MATERIALS
+  PACKAGING
+  LOGISTICS
+  SERVICES
+  EQUIPMENT
+}
+
+enum SupplierStatus {
+  ACTIVE
+  PENDING
+  SUSPENDED
+}
+
+enum EvaluationStatus {
+  DRAFT
+  SUBMITTED
+  VALIDATED
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  firstName    String
+  lastName     String
+  role         Role
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  evaluations Evaluation[]
+
+  @@map("users")
+}
+
+model Supplier {
+  id           String           @id @default(uuid())
+  name         String
+  category     SupplierCategory
+  country      String
+  contactEmail String
+  contactPhone String
+  status       SupplierStatus   @default(ACTIVE)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  evaluations Evaluation[]
+
+  @@index([category])
+  @@index([status])
+  @@map("suppliers")
+}
+
+model Criterion {
+  id          String @id @default(uuid())
+  label       String
+  description String
+  weight      Int
+
+  scores EvaluationScore[]
+
+  @@map("criteria")
+}
+
+model Evaluation {
+  id     String           @id @default(uuid())
+  period String
+  status EvaluationStatus @default(DRAFT)
+
+  comment         String?
+  rejectionReason String?
+  globalScore     Float?
+
+  createdAt   DateTime  @default(now())
+  submittedAt DateTime?
+  validatedAt DateTime?
+
+  supplierId  String
+  evaluatorId String
+  supplier    Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  evaluator   User     @relation(fields: [evaluatorId], references: [id], onDelete: Cascade)
+
+  scores EvaluationScore[]
+
+  // Un fournisseur ne peut avoir qu'une seule évaluation par période et par évaluateur.
+  @@unique([supplierId, evaluatorId, period])
+  @@index([supplierId])
+  @@index([status])
+  @@map("evaluations")
+}
+
+model EvaluationScore {
+  id    String @id @default(uuid())
+  score Int
+
+  evaluationId String
+  criterionId  String
+  evaluation   Evaluation @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
+  criterion    Criterion  @relation(fields: [criterionId], references: [id], onDelete: Cascade)
+
+  @@unique([evaluationId, criterionId])
+  @@map("evaluation_scores")
+}

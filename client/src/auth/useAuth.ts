@@ -9,7 +9,7 @@ export function useAuth() {
 
   const meQuery = useQuery({
     queryKey: AUTH_QUERY_KEY,
-    queryFn: () => apiFetch<AuthenticatedUser>('/auth/me'),
+    queryFn: ({ signal }) => apiFetch<AuthenticatedUser>('/auth/me', { signal }),
     retry: false,
   });
 

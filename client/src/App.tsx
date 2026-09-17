@@ -4,6 +4,8 @@ import { ProtectedRoute } from './components/layout/ProtectedRoute.js';
 import { ComingSoon } from './components/ui/ComingSoon.js';
 import { LoginPage } from './pages/LoginPage.js';
 import { NotFoundPage } from './pages/NotFoundPage.js';
+import { SupplierDetailPage } from './pages/SupplierDetailPage.js';
+import { SuppliersPage } from './pages/SuppliersPage.js';
 
 export function App() {
   return (
@@ -13,8 +15,12 @@ export function App() {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
           <Route index element={<ComingSoon title="Tableau de bord" />} />
-          <Route path="suppliers" element={<ComingSoon title="Fournisseurs" />} />
-          <Route path="suppliers/:id" element={<ComingSoon title="Fiche fournisseur" />} />
+          <Route path="suppliers" element={<SuppliersPage />} />
+          <Route path="suppliers/:id" element={<SupplierDetailPage />} />
+          <Route
+            path="suppliers/:id/evaluate"
+            element={<ComingSoon title="Formulaire d'évaluation" />}
+          />
 
           <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
             <Route path="validations" element={<ComingSoon title="Validation des évaluations" />} />

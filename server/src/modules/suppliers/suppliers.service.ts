@@ -3,6 +3,7 @@ import type { CreateSupplierInput, SupplierListItemDto, SupplierListQuery } from
 import { AppError } from '../../errors/AppError.js';
 import { prisma } from '../../lib/prisma.js';
 import { toEvaluationSummary } from '../evaluations/evaluations.mapper.js';
+import { roundScore } from '../evaluations/scoring.js';
 
 const PAGE_SIZE = 20;
 
@@ -56,7 +57,8 @@ export async function listSuppliers(query: SupplierListQuery) {
       name: supplier.name,
       category: supplier.category,
       status: supplier.status,
-      averageScore: aggregate?._avg.globalScore ?? null,
+      averageScore:
+        aggregate?._avg.globalScore != null ? roundScore(aggregate._avg.globalScore) : null,
       lastEvaluationDate: aggregate?._max.validatedAt?.toISOString() ?? null,
     };
   });
@@ -88,9 +90,7 @@ export async function getSupplierById(id: string) {
 
   const validated = supplier.evaluations.filter((e) => e.status === 'VALIDATED');
   const averageScore = validated.length
-    ? Math.round(
-        (validated.reduce((sum, e) => sum + (e.globalScore ?? 0), 0) / validated.length) * 100,
-      ) / 100
+    ? roundScore(validated.reduce((sum, e) => sum + (e.globalScore ?? 0), 0) / validated.length)
     : null;
 
   return {

@@ -71,4 +71,25 @@ export interface SupplierDetailDto {
   status: SupplierStatus;
   averageScore: number | null;
   evaluations: EvaluationSummaryDto[];
+  latestEvaluationDetail: EvaluationDetailDto | null;
+}
+
+export interface DashboardSupplierScoreDto {
+  id: string;
+  name: string;
+  averageScore: number;
+}
+
+export interface DashboardCategoryScoreDto {
+  category: SupplierCategory;
+  averageScore: number | null;
+}
+
+export interface DashboardDto {
+  suppliersByStatus: Record<SupplierStatus, number>;
+  averageScore: number | null;
+  topSuppliers: DashboardSupplierScoreDto[];
+  bottomSuppliers: DashboardSupplierScoreDto[];
+  scoresByCategory: DashboardCategoryScoreDto[];
+  pendingEvaluationsCount: number;
 }

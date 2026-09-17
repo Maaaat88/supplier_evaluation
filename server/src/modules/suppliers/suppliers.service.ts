@@ -7,7 +7,7 @@ import {
 } from 'shared';
 import { AppError } from '../../errors/AppError.js';
 import { prisma } from '../../lib/prisma.js';
-import { toEvaluationSummary } from '../evaluations/evaluations.mapper.js';
+import { toEvaluationDetail, toEvaluationSummary } from '../evaluations/evaluations.mapper.js';
 
 const PAGE_SIZE = 20;
 
@@ -107,6 +107,9 @@ export async function getSupplierById(id: string) {
     status: supplier.status,
     averageScore,
     evaluations: supplier.evaluations.map(toEvaluationSummary),
+    latestEvaluationDetail: supplier.evaluations[0]
+      ? toEvaluationDetail(supplier.evaluations[0])
+      : null,
   };
 }
 

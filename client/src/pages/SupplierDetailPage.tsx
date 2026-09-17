@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { fetchSupplierById } from '../api/suppliers.js';
+import { CriteriaRadarChart } from '../components/suppliers/CriteriaRadarChart.js';
+import { ScoreEvolutionChart } from '../components/suppliers/ScoreEvolutionChart.js';
 import { Badge } from '../components/ui/Badge.js';
-import { ComingSoon } from '../components/ui/ComingSoon.js';
 import { ErrorMessage } from '../components/ui/ErrorMessage.js';
 import { ScoreBadge } from '../components/ui/ScoreBadge.js';
 import { FullPageSpinner } from '../components/ui/Spinner.js';
@@ -86,7 +87,24 @@ export function SupplierDetailPage() {
         </button>
       </div>
 
-      <ComingSoon title="Graphiques (évolution du score, radar par critère)" />
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="rounded-lg bg-white p-5 shadow-sm">
+          <h2 className="mb-2 text-sm font-semibold text-slate-900">Évolution du score global</h2>
+          <ScoreEvolutionChart evaluations={data.evaluations} />
+        </div>
+        <div className="rounded-lg bg-white p-5 shadow-sm">
+          <h2 className="mb-2 text-sm font-semibold text-slate-900">
+            Détail par critère (dernière évaluation)
+          </h2>
+          {data.latestEvaluationDetail ? (
+            <CriteriaRadarChart scores={data.latestEvaluationDetail.scores} />
+          ) : (
+            <p className="p-8 text-center text-sm text-slate-500">
+              Aucune évaluation disponible pour ce fournisseur.
+            </p>
+          )}
+        </div>
+      </div>
 
       <div className="rounded-lg bg-white shadow-sm">
         <h2 className="border-b border-slate-200 px-4 py-3 text-sm font-semibold text-slate-900">

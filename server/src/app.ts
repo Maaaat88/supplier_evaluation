@@ -5,6 +5,7 @@ import { env } from './env.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { authRouter } from './modules/auth/auth.routes.js';
 import { criteriaRouter } from './modules/criteria/criteria.routes.js';
+import { dashboardRouter } from './modules/dashboard/dashboard.routes.js';
 import { evaluationsRouter } from './modules/evaluations/evaluations.routes.js';
 import { suppliersRouter } from './modules/suppliers/suppliers.routes.js';
 
@@ -27,5 +28,6 @@ app.use('/api/auth', authRouter);
 app.use('/api/suppliers', suppliersRouter);
 app.use('/api/criteria', criteriaRouter);
 app.use('/api/evaluations', evaluationsRouter);
+app.use('/api/dashboard', dashboardRouter);
 
 app.use(errorHandler);

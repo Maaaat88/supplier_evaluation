@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { AppLayout } from './components/layout/AppLayout.js';
 import { ProtectedRoute } from './components/layout/ProtectedRoute.js';
-import { ComingSoon } from './components/ui/ComingSoon.js';
+import { DashboardPage } from './pages/DashboardPage.js';
 import { EvaluationFormPage } from './pages/EvaluationFormPage.js';
 import { LoginPage } from './pages/LoginPage.js';
 import { NotFoundPage } from './pages/NotFoundPage.js';
@@ -16,7 +16,7 @@ export function App() {
 
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
-          <Route index element={<ComingSoon title="Tableau de bord" />} />
+          <Route index element={<DashboardPage />} />
           <Route path="suppliers" element={<SuppliersPage />} />
           <Route path="suppliers/:id" element={<SupplierDetailPage />} />
           <Route path="suppliers/:id/evaluate" element={<EvaluationFormPage />} />

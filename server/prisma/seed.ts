@@ -1,6 +1,6 @@
 import { PrismaClient, type SupplierCategory, type SupplierStatus } from '@prisma/client';
 import bcrypt from 'bcrypt';
-import { computeGlobalScore } from '../src/modules/evaluations/scoring.js';
+import { computeGlobalScore } from 'shared';
 
 const prisma = new PrismaClient();
 

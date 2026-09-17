@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { computeGlobalScore } from './scoring.js';
+import { computeGlobalScore } from 'shared';
 
 describe('computeGlobalScore', () => {
   it('retourne 100 quand toutes les notes sont maximales', () => {

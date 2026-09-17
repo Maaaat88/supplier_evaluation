@@ -1,9 +1,13 @@
 import type { Prisma } from '@prisma/client';
-import type { CreateSupplierInput, SupplierListItemDto, SupplierListQuery } from 'shared';
+import {
+  roundScore,
+  type CreateSupplierInput,
+  type SupplierListItemDto,
+  type SupplierListQuery,
+} from 'shared';
 import { AppError } from '../../errors/AppError.js';
 import { prisma } from '../../lib/prisma.js';
 import { toEvaluationSummary } from '../evaluations/evaluations.mapper.js';
-import { roundScore } from '../evaluations/scoring.js';
 
 const PAGE_SIZE = 20;
 

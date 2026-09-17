@@ -9,7 +9,9 @@ export function roundScore(value: number): number {
 
 /**
  * Moyenne pondérée des notes (1 à 5) par le poids de leur critère,
- * ramenée sur une échelle de 0 à 100.
+ * ramenée sur une échelle de 0 à 100. Utilisée à la fois pour le calcul
+ * persisté côté serveur et pour l'aperçu en temps réel côté client :
+ * une seule implémentation, jamais dupliquée.
  */
 export function computeGlobalScore(scores: WeightedScore[]): number {
   const totalWeight = scores.reduce((sum, s) => sum + s.weight, 0);

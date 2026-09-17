@@ -1,9 +1,13 @@
 import type { Prisma } from '@prisma/client';
-import type { EvaluationInput, EvaluationListQuery, Role } from 'shared';
+import {
+  computeGlobalScore,
+  type EvaluationInput,
+  type EvaluationListQuery,
+  type Role,
+} from 'shared';
 import { AppError } from '../../errors/AppError.js';
 import { prisma } from '../../lib/prisma.js';
 import { toEvaluationDetail } from './evaluations.mapper.js';
-import { computeGlobalScore } from './scoring.js';
 
 const evaluationInclude = {
   scores: { include: { criterion: true } },

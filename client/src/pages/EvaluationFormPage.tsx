@@ -50,6 +50,18 @@ export function EvaluationFormPage() {
     return <ErrorMessage message="Impossible de charger ce fournisseur." />;
   }
 
+  if (criteriaQuery.isError) {
+    return <ErrorMessage message="Impossible de charger les critères d'évaluation." />;
+  }
+
+  if (myEvaluationsQuery.isError) {
+    return <ErrorMessage message="Impossible de charger l'historique de vos évaluations." />;
+  }
+
+  if (criteria.length === 0) {
+    return <ErrorMessage message="Aucun critère d'évaluation n'est configuré." />;
+  }
+
   return (
     <div className="space-y-6">
       <Link to={`/suppliers/${supplierId}`} className="text-sm text-blue-600 hover:underline">
